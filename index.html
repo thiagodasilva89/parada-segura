@@ -140,6 +140,10 @@ input[type=text],input[type=number],select{font:1rem var(--body);width:100%;padd
 .checks li.done{border-color:var(--ok);background:#e3f5ea}
 .checks li.cur{border-color:var(--brand2);background:var(--note)}
 /* monte o EPI */
+.task-card{display:flex;gap:12px;align-items:center;background:linear-gradient(115deg,var(--brand-dk),var(--brand));color:#fff;border-radius:12px;padding:14px 18px;margin-top:6px;animation:fbIn .4s cubic-bezier(.2,.8,.2,1)}
+.task-card .tn{flex:none;width:40px;height:40px;border-radius:50%;background:var(--brand2);color:var(--brand-dk);display:grid;place-items:center;font-weight:900;font-size:1.1rem}
+.task-card b{font-size:1.15rem;font-weight:900;line-height:1.25}
+
 .epi-grid{display:grid;grid-template-columns:minmax(240px,0.9fr) minmax(0,1.3fr);gap:18px;margin-top:6px;align-items:start}
 .epi-stage{position:sticky;top:12px;border:1px solid var(--line);border-radius:14px;background:radial-gradient(circle at 50% 38%,#ffffff,#dde9f7 75%);padding-bottom:10px}
 .epi-stage.over{outline:3px dashed var(--brand);outline-offset:-3px}
@@ -260,6 +264,49 @@ body.show-ans #scene .hot[data-s]{fill:#1f9d5522;stroke:#1f9d55;stroke-width:3;s
 .pin-msg{min-height:1.4em;color:var(--bad);font-weight:700;margin:4px auto 0}
 .pin .row{justify-content:center}
 .modal.shake{animation:shake .35s}
+/* animações */
+.opts .opt{animation:optIn .38s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--d,0) * 70ms)}
+@keyframes optIn{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:none}}
+.opt.right{animation:okPulse .5s ease}
+@keyframes okPulse{0%{transform:scale(1)}40%{transform:scale(1.025)}100%{transform:scale(1)}}
+.opt.wrong{animation:shake .4s}
+.feedback{animation:fbIn .4s cubic-bezier(.2,.8,.2,1)}
+@keyframes fbIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.feedback img.mini{animation:bob 2.8s ease-in-out infinite}
+.phases .phase{animation:optIn .45s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--d,0) * 80ms + 120ms)}
+.phase{transition:transform .2s,box-shadow .2s}
+.phase:hover{transform:translateY(-4px);box-shadow:0 10px 24px #0b3f8f1f}
+.welcome img{animation:bob 3.2s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.tier-banner{position:fixed;left:50%;top:calc(90px + env(safe-area-inset-top,0px));transform:translateX(-50%);z-index:75;display:flex;gap:14px;align-items:center;background:#fff;border-radius:16px;padding:12px 20px 12px 12px;box-shadow:0 20px 50px #0b3f8f40;border:3px solid var(--c);animation:bannerIn .55s cubic-bezier(.2,1.4,.4,1)}
+.tier-banner.out{animation:bannerOut .45s ease forwards}
+.tier-banner .tb-disc{width:56px;height:56px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff9,transparent 45%),var(--c);display:grid;place-items:center;font-weight:900;font-size:.7rem;text-transform:uppercase;color:#12305a;animation:spinIn .8s cubic-bezier(.2,1.2,.4,1)}
+.tier-banner small{display:block;font-size:.7rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.tier-banner b{display:block;font-size:1.3rem;font-weight:900;color:var(--fg)}
+.tier-banner span{font-size:.85rem;color:var(--muted)}
+@keyframes bannerIn{from{opacity:0;transform:translate(-50%,-30px) scale(.9)}to{opacity:1;transform:translate(-50%,0)}}
+@keyframes bannerOut{to{opacity:0;transform:translate(-50%,-20px)}}
+@keyframes spinIn{from{transform:rotateY(180deg) scale(.4)}to{transform:none}}
+.spark{position:absolute;left:50%;top:40%;width:40px;height:40px;margin:-20px;border-radius:50%;border:3px solid var(--brand2);pointer-events:none;animation:spark .65s ease-out forwards}
+@keyframes spark{from{transform:scale(.3);opacity:1}to{transform:scale(4);opacity:0}}
+.stamp{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%) rotate(-12deg);padding:8px 16px;border:4px solid;border-radius:10px;font-weight:900;font-size:1.4rem;letter-spacing:.06em;background:#ffffffd9;pointer-events:none;animation:stampIn .45s cubic-bezier(.2,1.6,.4,1) both;white-space:nowrap;z-index:3}
+.stamp.ok{color:var(--ok);border-color:var(--ok)}
+.stamp.bad{color:var(--bad);border-color:var(--bad)}
+.stamp.big{font-size:2rem;top:50%}
+@keyframes stampIn{from{opacity:0;transform:translate(-50%,-50%) rotate(-12deg) scale(2.2)}to{opacity:1;transform:translate(-50%,-50%) rotate(-12deg) scale(1)}}
+#scene .found-ring.draw{stroke-dasharray:100;animation:draw .6s ease-out both}
+@keyframes draw{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
+#scene .found circle,#scene .found text{transform-box:fill-box;transform-origin:center;animation:popIn .4s .35s cubic-bezier(.2,1.6,.4,1) both}
+@keyframes popIn{from{transform:scale(0)}to{transform:scale(1)}}
+#scene .xmark{transform-box:fill-box;transform-origin:center;animation:xfade 1.4s ease forwards}
+@keyframes xfade{0%{transform:scale(0);opacity:0}20%{transform:scale(1.15);opacity:1}35%{transform:scale(1)}80%{opacity:1}100%{opacity:0}}
+#pump .pt.locked .lock{animation:lockDrop .55s cubic-bezier(.3,1.6,.5,1)}
+@keyframes lockDrop{from{translate:0 -22px;opacity:0}60%{translate:0 3px;opacity:1}to{translate:0 0}}
+.rc .rv{display:inline-block;animation:lcd .7s steps(6) both;animation-delay:calc(var(--d,0) * 180ms + 200ms)}
+@keyframes lcd{0%{opacity:0}30%{opacity:1}45%{opacity:.2}60%{opacity:1}75%{opacity:.4}100%{opacity:1}}
+.medal .disc{animation:spinIn 1s cubic-bezier(.2,1.2,.4,1) both}
+.breakdown div{animation:optIn .4s both}
+.breakdown div:nth-child(2){animation-delay:.1s}.breakdown div:nth-child(3){animation-delay:.2s}.breakdown div:nth-child(4){animation-delay:.3s}.breakdown div:nth-child(5){animation-delay:.4s}
 /* placar */
 aside .score{font-family:var(--display);font-weight:900;font-size:3.4rem;line-height:1;font-variant-numeric:tabular-nums;color:var(--brand)}
 .pop{animation:pop .35s ease-out}
@@ -653,7 +700,12 @@ function renderSide(popIt){
       .map((x,i)=>`<li><span class="n">${i+1}</span><span class="nm">${esc(x.n)} <small>${x.c} jog.</small></span><b>${x.avg}</b></li>`)}
   $("#rank").innerHTML=rows.length?rows.join(""):`<li><span></span><span class="muted">Nenhuma partida ainda</span><span></span></li>`;
 }
-function add(p,bucket){st.score+=p;st.parts[bucket]+=p;floatPts(p);renderSide(true)}
+function add(p,bucket){const before=tierOf(st.score);st.score+=p;st.parts[bucket]+=p;floatPts(p);renderSide(true);const after=tierOf(st.score);if(after&&after!==before&&p>0)tierBanner(after)}
+function tierBanner(t){
+  const d=document.createElement("div");d.className="tier-banner";d.style.setProperty("--c",t.color);
+  d.innerHTML=`<div class="tb-disc">${esc(t.name)}</div><div><small>Faixa desbloqueada</small><b>${esc(t.name)}</b><span>${esc(t.prize)}</span></div>`;
+  document.body.appendChild(d);beep("win");setTimeout(()=>d.classList.add("out"),2600);setTimeout(()=>d.remove(),3100);
+}
 $("#tabP").onclick=()=>{rankTab="p";$("#tabP").setAttribute("aria-selected","true");$("#tabE").setAttribute("aria-selected","false");renderSide()};
 $("#tabE").onclick=()=>{rankTab="e";$("#tabE").setAttribute("aria-selected","true");$("#tabP").setAttribute("aria-selected","false");renderSide()};
 $("#sndBtn").onclick=()=>{sound=!sound;LS.set("dps2-snd",sound);$("#sndBtn").textContent="Som: "+(sound?"ligado":"desligado");$("#sndBtn").setAttribute("aria-pressed",sound)};
@@ -753,11 +805,11 @@ function home(){
     <h2>Sua equipe está pronta para a parada?</h2>
     <div class="bubble"><p style="margin:0">Cinco fases baseadas na capacitação de Liberação de Equipamentos e Sistemas, com as regras que mais pesam em Olefinas 2 durante a parada. Cada acerto soma pontos e libera faixas de prêmio. Responda rápido: o tempo também vale ponto.</p></div></div><img src="${IMG.acena}" alt="Mascote da segurança acenando"></div>
     <div class="phases">
-      <div class="phase"><div class="art"><img src="${IMG.quiz}" alt=""></div><div class="tx"><span class="num"><i>1</i>${MAX.quiz} pts</span><b>Quiz da PTL</b><span>${QUIZ_N} perguntas com cronômetro de ${QUIZ_TIME}s. Quanto mais rápido, mais pontos.</span></div></div>
-      <div class="phase"><div class="art"><img src="${IMG.epi}" alt=""></div><div class="tx"><span class="num"><i>2</i>${MAX.epi} pts</span><b>Monte o EPI</b><span>${EPI_RODADAS} tarefas sorteadas. Vista o trabalhador só com o que cada uma exige.</span></div></div>
-      <div class="phase"><div class="art"><img src="${IMG.inspecao}" alt=""></div><div class="tx"><span class="num"><i>3</i>${MAX.cena} pts</span><b>Inspeção de campo</b><span>Encontre os ${RISCOS.length} desvios escondidos na frente de serviço em ${CENA_TIME}s.</span></div></div>
-      <div class="phase"><div class="art"><img src="${IMG.bloqueio}" alt=""></div><div class="tx"><span class="num"><i>4</i>${MAX.bloqueio} pts</span><b>Libere a bomba</b><span>Cadeado azul nos DIEs, dreno e vent, cadeado vermelho na multilacre e energia zero.</span></div></div>
-      <div class="phase"><div class="art"><img src="${IMG.radio}" alt=""></div><div class="tx"><span class="num"><i>5</i>${MAX.diag} pts</span><b>Diagnóstico de campo</b><span>Casos reais do treinamento: leia o detector e decida se a liberação segue.</span></div></div>
+      <div class="phase" style="--d:0"><div class="art"><img src="${IMG.quiz}" alt=""></div><div class="tx"><span class="num"><i>1</i>${MAX.quiz} pts</span><b>Quiz da PTL</b><span>${QUIZ_N} perguntas com cronômetro de ${QUIZ_TIME}s. Quanto mais rápido, mais pontos.</span></div></div>
+      <div class="phase" style="--d:1"><div class="art"><img src="${IMG.epi}" alt=""></div><div class="tx"><span class="num"><i>2</i>${MAX.epi} pts</span><b>Monte o EPI</b><span>${EPI_RODADAS} tarefas sorteadas. Vista o trabalhador só com o que cada uma exige.</span></div></div>
+      <div class="phase" style="--d:2"><div class="art"><img src="${IMG.inspecao}" alt=""></div><div class="tx"><span class="num"><i>3</i>${MAX.cena} pts</span><b>Inspeção de campo</b><span>Encontre os ${RISCOS.length} desvios escondidos na frente de serviço em ${CENA_TIME}s.</span></div></div>
+      <div class="phase" style="--d:3"><div class="art"><img src="${IMG.bloqueio}" alt=""></div><div class="tx"><span class="num"><i>4</i>${MAX.bloqueio} pts</span><b>Libere a bomba</b><span>Cadeado azul nos DIEs, dreno e vent, cadeado vermelho na multilacre e energia zero.</span></div></div>
+      <div class="phase" style="--d:4"><div class="art"><img src="${IMG.radio}" alt=""></div><div class="tx"><span class="num"><i>5</i>${MAX.diag} pts</span><b>Diagnóstico de campo</b><span>Casos reais do treinamento: leia o detector e decida se a liberação segue.</span></div></div>
     </div>
     <form id="f"><div class="form">
       <div><label for="nome">Nome</label><input type="text" id="nome" maxlength="30" required placeholder="Ex.: João Silva"></div>
@@ -780,7 +832,7 @@ function quiz(){
     <div class="hud"><span>Tempo <b id="tl">${left}s</b></span><span>Acertos <b>${st.hits}</b></span></div>
     <div class="tbar" id="tb"><i style="width:100%"></i></div>
     <div class="qhead"><h3 class="q">${esc(q.q)}</h3><div class="qimg"><img src="${qImg(q)}" alt=""></div></div>
-    <div class="opts">${order.map((o,j)=>`<button class="opt" data-k="${o.k}"${o.k===q.a?' data-ok="1"':""}><span class="lt">${String.fromCharCode(65+j)}</span><span>${esc(o.t)}</span></button>`).join("")}</div><div id="fb"></div>`;
+    <div class="opts">${order.map((o,j)=>`<button class="opt" style="--d:${j}" data-k="${o.k}"${o.k===q.a?' data-ok="1"':""}><span class="lt">${String.fromCharCode(65+j)}</span><span>${esc(o.t)}</span></button>`).join("")}</div><div id="fb"></div>`;
   const answer=k=>{
     stopTimer();
     stage.querySelectorAll(".opt").forEach(x=>{x.disabled=true;if(+x.dataset.k===q.a)x.classList.add("right")});
@@ -919,10 +971,11 @@ function epi(){
     const tr=$("#tray");if(tr)tr.innerHTML=on.size?[...on].map(id=>`<button class="chip" data-x="${id}">${esc(EPI_ITENS.find(x=>x.id===id).nome.split(" (")[0].split(" ·")[0])} <span aria-hidden="true">×</span></button>`).join(""):'<span class="muted">Nenhum item ainda</span>';
     if(tr)tr.querySelectorAll(".chip").forEach(c=>c.onclick=()=>toggle(c.dataset.x));
   };
+  const sparkle=()=>{const s=document.createElement("span");s.className="spark";$("#drop").appendChild(s);setTimeout(()=>s.remove(),700)};
   const toggle=(id,forceOn)=>{
     if(checked)return;const it=EPI_ITENS.find(x=>x.id===id);
     if(on.has(id)&&!forceOn){on.delete(id);beep("tick")}
-    else if(!on.has(id)){if(it.grupo)EPI_ITENS.filter(x=>x.grupo===it.grupo).forEach(x=>on.delete(x.id));on.add(id);beep("lock")}
+    else if(!on.has(id)){if(it.grupo)EPI_ITENS.filter(x=>x.grupo===it.grupo).forEach(x=>on.delete(x.id));on.add(id);beep("lock");sparkle()}
     paint();
   };
   stage.querySelectorAll(".item").forEach(b=>{
@@ -946,6 +999,7 @@ function epi(){
       if(miss.includes(id))b.classList.add("miss");else if(extra.includes(id))b.classList.add("extra");else if(on.has(id))b.classList.add("good")});
     const perfeito=!miss.length&&!extra.length;
     beep(perfeito?"ok":"bad");
+    $("#drop").insertAdjacentHTML("beforeend",`<div class="stamp ${perfeito?"ok":"bad"}">${perfeito?"LIBERADO":"NÃO LIBERADO"}</div>`);
     $("#fb").innerHTML=`<div class="feedback with-m ${perfeito?"":"bad"}"><img class="mini" src="${perfeito?IMG.acena:IMG.radio}" alt=""><div class="fb-txt"><b>${perfeito?"Liberado · +"+pts:"Não liberado · +"+pts}</b>
       ${miss.length?`<p style="margin:6px 0 0"><b style="font-size:1rem;color:var(--bad)">Faltou:</b> ${miss.map(nm).map(esc).join(", ")}</p>`:""}
       ${extra.length?`<p style="margin:6px 0 0"><b style="font-size:1rem;color:var(--warn)">Não precisava:</b> ${extra.map(nm).map(esc).join(", ")}</p>`:""}
@@ -1154,14 +1208,14 @@ function cena(){
   stage.querySelectorAll(".hot[data-r]").forEach(h=>h.onclick=()=>{
     const r=RISCOS.find(x=>x.id===h.dataset.r);if(st.found.has(r.id))return;
     st.found.add(r.id);add(100,"cena");beep("ok");const i=RISCOS.indexOf(r)+1;
-    marks.insertAdjacentHTML("beforeend",`<g class="found"><rect class="found-ring" x="${r.x}" y="${r.y}" width="${r.w}" height="${r.h}" rx="10"/><circle cx="${r.x+r.w-4}" cy="${r.y+4}" r="14" fill="#d63b2b"/><text x="${r.x+r.w-4}" y="${r.y+9}" text-anchor="middle" font-family="Lato,sans-serif" font-weight="900" font-size="14" fill="#fff">${i}</text></g>`);
+    marks.insertAdjacentHTML("beforeend",`<g class="found"><rect class="found-ring draw" pathLength="100" x="${r.x}" y="${r.y}" width="${r.w}" height="${r.h}" rx="10"/><circle cx="${r.x+r.w-4}" cy="${r.y+4}" r="14" fill="#d63b2b"/><text x="${r.x+r.w-4}" y="${r.y+9}" text-anchor="middle" font-family="Lato,sans-serif" font-weight="900" font-size="14" fill="#fff">${i}</text></g>`);
     const li=stage.querySelector(`[data-l="${r.id}"]`);li.classList.add("got");li.innerHTML=`<span class="ln">${i}</span><b>${esc(r.label)}</b><br><span>${esc(r.e)}</span><span class="ref">${esc(r.ref)}</span>`;
     $("#fc").textContent=`${st.found.size}/${RISCOS.length}`;
     if(st.found.size===RISCOS.length)end();
   });
   stage.querySelectorAll(".hot[data-s]").forEach(h=>h.onclick=()=>{
     const s=SEGUROS.find(x=>x.id===h.dataset.s);
-    if(st.parts.cena>=25)add(-25,"cena");beep("bad");toast(s.e+" −25",true);
+    if(st.parts.cena>=25)add(-25,"cena");beep("bad");toast(s.e+" −25",true);marks.insertAdjacentHTML("beforeend",`<g class="xmark"><circle cx="${s.x+s.w/2}" cy="${s.y+s.h/2}" r="18" fill="#d63b2b"/><path d="M${s.x+s.w/2-7},${s.y+s.h/2-7} l14,14 m0,-14 l-14,14" stroke="#fff" stroke-width="4" stroke-linecap="round"/></g>`);
     marks.insertAdjacentHTML("beforeend",`<rect class="ok-ring" x="${s.x}" y="${s.y}" width="${s.w}" height="${s.h}" rx="8"/>`);
     h.style.pointerEvents="none";
   });
@@ -1199,7 +1253,7 @@ function ball(id,x,y,tag,side=1){ /* válvula de esfera de dreno, em tubo vertic
   return `<g class="pt dreno" data-p="${id}" tabindex="0" role="button" aria-label="${tag}">
     <circle class="ring" cx="${x}" cy="${y}" r="30"/>
     <rect x="${x-9}" y="${y-10}" width="18" height="20" rx="4" fill="url(#vbody)"/>
-    <g class="lever" style="transform-origin:${x}px ${y-12}px"><rect x="${x-2}" y="${y-14}" width="${side*30}" height="6" rx="3" fill="#d63b2b" transform="${side<0?`translate(${-2},0)`:""}"/></g>
+    <g class="lever" style="transform-origin:${x}px ${y-12}px"><rect x="${side<0?x-28:x-2}" y="${y-14}" width="30" height="6" rx="3" fill="#d63b2b"/></g>
     <rect x="${x-5}" y="${y+10}" width="10" height="20" fill="url(#pp_v)"/>
     <path d="M${x-12},${y+34} h24 l-7,12 h-10z" fill="#5f6b77"/>
     <g class="drip"><ellipse cx="${x}" cy="${y+54}" rx="3" ry="5" fill="#8a6a2e"/><ellipse cx="${x}" cy="${y+66}" rx="2.5" ry="4" fill="#8a6a2e"/></g>
@@ -1330,6 +1384,7 @@ function bloqueio(){
     if(!pesDone())return err(null,"Você ainda não colocou seu cadeado vermelho na caixa multilacre.");
     st.tested=true;paint();$("#test").disabled=true;
     const bt=document.getElementById("btest");if(bt)bt.setAttribute("opacity","1");
+    const pw=stage.querySelector(".pid-wrap");if(pw){pw.style.position="relative";pw.insertAdjacentHTML("beforeend",`<div class="stamp ok big">ENERGIA ZERO ✓</div>`)}
     const pts=Math.max(100,MAX.bloqueio-75*st.bErr);add(pts,"bloqueio");beep("ok");
     $("#fb").innerHTML=`<div class="feedback"><b class="h">Energia zero confirmada · +${pts}</b><p style="margin:6px 0 0">Manômetro local zerado, drenos sem passagem e botoeira sem partida. Teste registrado no Controle de Energia Zero do PIEP: agora o equipamento pode ser liberado na PTL.</p></div>
       <div class="row"><button class="primary" id="nx">Ir para a fase 5</button></div>`;
@@ -1341,7 +1396,7 @@ function bloqueio(){
 
 /* ---------- fase 5: diagnóstico de campo ---------- */
 function rae(l){
-  const cell=(k,v,u)=>`<div class="rc"><span>${k}</span><b>${v}</b></div>`;
+  let ci=0;const cell=(k,v,u)=>`<div class="rc"><span>${k}</span><b class="rv" style="--d:${ci++}">${v}</b></div>`;
   return `<div class="rae"><img src="${IMG.multirae}" alt="Detector multigás"><div class="lcd">
     <div class="lcd-h">LEITURA NO PONTO</div>
     <div class="lcd-g">${cell("O₂",l.O2)}${cell("LIE",l.LIE)}${cell("Benzeno",l.Bz)}${cell("VOC",l.VOC)}</div></div></div>`;
@@ -1368,7 +1423,7 @@ function diag(){
       ${rae(c.leitura)}
     </div>
     <h3 class="q">${esc(q.q)}</h3>
-    <div class="opts">${order.map((o,j)=>`<button class="opt" data-k="${o.k}"${o.k===q.a?' data-ok="1"':""}><span class="lt">${String.fromCharCode(65+j)}</span><span>${esc(o.t)}</span></button>`).join("")}</div><div id="fb"></div>`;
+    <div class="opts">${order.map((o,j)=>`<button class="opt" style="--d:${j}" data-k="${o.k}"${o.k===q.a?' data-ok="1"':""}><span class="lt">${String.fromCharCode(65+j)}</span><span>${esc(o.t)}</span></button>`).join("")}</div><div id="fb"></div>`;
   stage.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
     const k=+b.dataset.k,ok=k===q.a;
     stage.querySelectorAll(".opt").forEach(x=>{x.disabled=true;if(+x.dataset.k===q.a)x.classList.add("right")});
@@ -1393,10 +1448,11 @@ function finish(){
       <div style="min-width:0"><p style="font-size:1.25rem;margin:0"><b>${esc(st.name)}</b> fez <b style="color:var(--brand2)">${st.score} pontos</b>.</p>
       <p class="muted" style="margin:4px 0 0">${t?`Prêmio: <b style="color:var(--fg)">${esc(t.prize)}</b>. Mostre esta tela ao técnico de SSMA.`:`Faça ${CFG.tiers[0].min} pontos para liberar o primeiro prêmio.`}</p>
       ${next?`<p class="muted" style="margin:4px 0 0">Faltaram ${next.min-st.score} pontos para ${esc(next.name)}.</p>`:""}</div></div>
-    <div class="breakdown"><div><b>${st.parts.quiz}</b><span>Quiz · de ${MAX.quiz}</span></div><div><b>${st.parts.epi}</b><span>EPI · de ${MAX.epi}</span></div><div><b>${st.parts.cena}</b><span>Inspeção · de ${MAX.cena}</span></div><div><b>${st.parts.bloqueio}</b><span>Bloqueio · de ${MAX.bloqueio}</span></div><div><b>${st.parts.diag}</b><span>Diagnóstico · de ${MAX.diag}</span></div></div>
+    <div class="breakdown"><div><b class="cu" data-to="${st.parts.quiz}">0</b><span>Quiz · de ${MAX.quiz}</span></div><div><b class="cu" data-to="${st.parts.epi}">0</b><span>EPI · de ${MAX.epi}</span></div><div><b class="cu" data-to="${st.parts.cena}">0</b><span>Inspeção · de ${MAX.cena}</span></div><div><b class="cu" data-to="${st.parts.bloqueio}">0</b><span>Bloqueio · de ${MAX.bloqueio}</span></div><div><b class="cu" data-to="${st.parts.diag}">0</b><span>Diagnóstico · de ${MAX.diag}</span></div></div>
     <div class="feedback with-m"><img class="mini" src="${IMG.acena}" alt=""><div class="fb-txt"><b>Leve para o campo</b><p style="margin:6px 0 0">Na dúvida, pare e pergunte. PTL no local, cadeado vermelho na multilacre e energia zero testada antes de pôr a mão.</p></div></div>
     <div class="row"><button class="primary" id="again">Próximo jogador</button></div>`;
   renderSide(true);$("#again").onclick=home;
+  stage.querySelectorAll(".cu").forEach((el,i)=>{const to=+el.dataset.to,t0=performance.now()+i*140;(function f(t){const k=Math.max(0,Math.min(1,(t-t0)/700));el.textContent=Math.round(to*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(f)})(performance.now())});
   if(t){beep("win");confetti(t.color)}
 }
 function confetti(c){
